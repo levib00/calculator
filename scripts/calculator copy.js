@@ -1,3 +1,6 @@
+
+
+
 const number = document.querySelectorAll(".number-button")
 
 const screen = document.querySelector("#screen")
@@ -12,10 +15,7 @@ function setScreen (operation) {
 }
 
 const clear = document.querySelector("#clear-button")
-clear.addEventListener('click', clearScreen)
-function clearScreen() {
-    document.getElementById("screen").innerHTML = ''
-}
+
 let operation 
 let mathArray
 let mathArrayLength
@@ -25,14 +25,13 @@ function setOperation() {
         operation = document.getElementById("screen").innerHTML
     } else {
         operation += document.getElementById("screen").innerHTML
-        let mathArray = operation.split(/[*+\-\/=]+/)
+        mathArray = operation.split(/[*+\-\/=]+/)
         mathArrayLength = mathArray.length
         array1 = mathArray[0]
         array2 = mathArray[1]
         console.log(mathArray)
         console.log(mathArrayLength)
-    }
-    
+    } 
 }
 let operatorSymbol
 const operator = document.querySelectorAll(".operator-button")
@@ -52,17 +51,25 @@ let result
 
 function getResult() {
     if (mathArrayLength > 1) {
-    
-    result = parseFloat(array1) + parseFloat(array2)
+        if (operatorSymbol === '/'){
+            result = parseFloat(array1) / parseFloat(array2)
+        } else if (operatorSymbol === '*') {
+            result = parseFloat(array1) * parseFloat(array2)
+        } else if (operatorSymbol === '+') {
+            result = parseFloat(array1) + parseFloat(array2)
+        } else if (operatorSymbol === '-') {
+            result = parseFloat(array1) - parseFloat(array2)
+        }
     document.getElementById("screen").innerHTML = result
     console.log('works')
-    } else {
-        console.log(operation)
-        console.log('doesn\'t')
-        console.log(mathArrayLength)
-    }
+    } else {}
 }
-
-const sums = new function sumNumbers(num1, num2) {
-    num1 = num1 + num2
+clear.addEventListener('click', clearButton)
+function clearButton() {
+    clearScreen()
+    console.log(mathArray)
+    mathArray.splice(0, mathArray.length)
+}
+function clearScreen() {
+    document.getElementById("screen").innerHTML = ''
 }
