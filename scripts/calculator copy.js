@@ -18,22 +18,29 @@ function clearScreen() {
 }
 let operation 
 let mathArray
+let mathArrayLength
+let array2
 function setOperation() {
     if (operation == undefined) {
         operation = document.getElementById("screen").innerHTML
     } else {
         operation += document.getElementById("screen").innerHTML
-        let mathArray = operation.split(/[*+\-=]+/)
+        let mathArray = operation.split(/[*+\-\/=]+/)
+        mathArrayLength = mathArray.length
+        array1 = mathArray[0]
+        array2 = mathArray[1]
         console.log(mathArray)
+        console.log(mathArrayLength)
     }
     
 }
+let operatorSymbol
 const operator = document.querySelectorAll(".operator-button")
 operator.forEach((operators) => {
-    operators.addEventListener('click', () => {
-        
+    operators.addEventListener('click', () => {  
         setOperation(operation)
         operation += operators.innerHTML
+        operatorSymbol = operators.innerHTML
         clearScreen()
         getResult()
 
@@ -41,33 +48,18 @@ operator.forEach((operators) => {
         })
 })
 
-/*const addition = document.querySelector("#plus-button")
-addition.addEventListener('click', () => {
-    setScreen()
-    clearScreen()
-    getResult()
-    
-})
-
-
-const equals = document.querySelector('#equals-button')
-equals.addEventListener('click', () => {
-    getResult()
-    clearScreen()
-})*/
-
-
-//split(*+/-=) the operation string. take the substrings 
-const format = /[*+\-=]+/;
 let result
+
 function getResult() {
-    if (mathArray.length > 1) {
-    result = parseFloat(operation)
+    if (mathArrayLength > 1) {
+    
+    result = parseFloat(array1) + parseFloat(array2)
     document.getElementById("screen").innerHTML = result
     console.log('works')
     } else {
         console.log(operation)
-        console.log('doesnt')
+        console.log('doesn\'t')
+        console.log(mathArrayLength)
     }
 }
 
