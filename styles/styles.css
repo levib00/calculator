@@ -50,7 +50,7 @@ body {
 .number-button {
     border-width: 1.5px;
 }
-#clear-button,
+#clear-btn,
 .operator-button {
     background-color: orange;
 }
