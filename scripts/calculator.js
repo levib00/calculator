@@ -32,6 +32,9 @@ let operator = null;
 const add = document.querySelector("#plus-btn");
 add.addEventListener('click', addButton);
 function addButton() {
+    if (a === null) {
+        a = 0;
+    }
     if (b !== null) {
         calculate();
     }
@@ -41,6 +44,9 @@ function addButton() {
 const subtract = document.querySelector("#minus-btn");
 subtract.addEventListener('click', subtractButton);
 function subtractButton() {
+    if (a === null) {
+        a = 0;
+    }
     if (b !== null) {
         calculate();
     }
@@ -50,6 +56,9 @@ function subtractButton() {
 const multiply = document.querySelector("#multiply-btn");
 multiply.addEventListener('click', multiplyButton);
 function multiplyButton() {
+    if (a === null) {
+        a = 0;
+    }
     if (b !== null) {
         calculate();
     }
@@ -59,6 +68,9 @@ function multiplyButton() {
 const divide = document.querySelector("#division-btn");
 divide.addEventListener('click', divideButton);
 function divideButton() {
+    if (a === null) {
+        a = 0;
+    }
     if (b !== null) {
         calculate();
     }
@@ -130,6 +142,23 @@ function backspaceButton() {
         screen.innerHTML = a;
     } else if (inputSwitch === true) {
         b = b.slice(0,-1);
+        screen.innerHTML = b;
+    }
+}
+const negPos = document.querySelector("#neg-pos-btn");
+negPos.addEventListener('click', negPosButton);
+function negPosButton() {
+    if (inputSwitch === false && a.includes('-') === false) {
+        a = '-' + a;
+        screen.innerHTML = a;
+    } else if (inputSwitch === true && b.includes('-') === false) {
+        b = '-' + b;
+        screen.innerHTML = b;
+    } else if (inputSwitch === false && a.includes('-') === true) {
+        a = a.slice(1);
+        screen.innerHTML = a;
+    } else if (inputSwitch === true && b.includes('-') === true) {
+        b = b.slice(1);
         screen.innerHTML = b;
     }
 }

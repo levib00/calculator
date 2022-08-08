@@ -11,7 +11,7 @@ body {
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    height: 550px;
+    height: 620px;
     width: 420px;
     background-color:slategray;
     margin-top: 100px;
@@ -24,8 +24,8 @@ body {
     width: 350px;
     background-color: white;
     border: 4px solid black;
-    margin-top: 20px;
-    align-items:center;
+    margin-top: -40px;
+    align-items: center;
     justify-content: flex-end;
     font-size: 32px;
     font-family: 'Share Tech Mono', monospace;
@@ -41,6 +41,10 @@ body {
     padding-top: 36px;
     box-sizing: border-box;
 }
+#extra-container {
+    display: flex;
+    gap: 90px;
+}
 #number-container {
     width: 260px;
 }
@@ -49,12 +53,13 @@ body {
     display: flex;
     flex-direction: column;
 }
-#clear-button,
+.extra-operator,
 .operator-button,
 .number-button {
     border-width: 1.5px;
 }
 #clear-btn,
+#backspace-btn,
 .operator-button {
     background-color: orange;
 }
@@ -69,4 +74,3 @@ button {
     font-size: 32px;
     font-family: 'Share Tech Mono', monospace;
 }
-
