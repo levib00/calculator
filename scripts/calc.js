@@ -1,7 +1,4 @@
-//problem one output number to screen
-
-
-
+//TODO add decimal functionality, add backspace button, redesign CSS. 
 let a = null;
 let b = null;
 let inputSwitch = false;
@@ -13,7 +10,9 @@ number.forEach((numbers) => {
             screen.innerHTML = '';
             result = null
         }
-        if (a === null && inputSwitch === false) {
+        if ((a != null && a.length > 9 && inputSwitch === false) || (b != null && b.length > 9 && inputSwitch === true)) {
+        }
+        else if (a === null && inputSwitch === false) {
             a = numbers.innerHTML;
             screen.innerHTML = a;
         } else if ( inputSwitch === false) {
@@ -28,11 +27,12 @@ number.forEach((numbers) => {
         }     
     });
 });
-let operator = null //TODO in current build you dont need to press an operator after calculating. i would like to change that.
+let operator = null 
+
 const add = document.querySelector("#plus-btn")
 add.addEventListener('click', addButton)
 function addButton() {
-    if (operator != null) {
+    if (b !== null) {
         calculate()
     }
     inputSwitch = true
@@ -41,7 +41,7 @@ function addButton() {
 const subtract = document.querySelector("#minus-btn")
 subtract.addEventListener('click', subtractButton)
 function subtractButton() {
-    if (operator != null) {
+    if (b !== null) {
         calculate()
     }
     inputSwitch = true
@@ -50,7 +50,7 @@ function subtractButton() {
 const multiply = document.querySelector("#multiply-btn")
 multiply.addEventListener('click', multiplyButton)
 function multiplyButton() {
-    if (operator != null) {
+    if (b !== null) {
         calculate()
     }
     inputSwitch = true
@@ -59,7 +59,7 @@ function multiplyButton() {
 const divide = document.querySelector("#division-btn")
 divide.addEventListener('click', divideButton)
 function divideButton() {
-    if (operator != null) {
+    if (b !== null) {
         calculate()
     }
     inputSwitch = true
@@ -69,32 +69,56 @@ let result = null
 const equals = document.querySelector("#equals-btn")
 equals.addEventListener('click', calculate)
 function calculate() {
-    switch (operator) {
-        case '+':
-            result = parseFloat(a) + parseFloat(b);
-            break;
-        case '-':
-            result = parseFloat(a) - parseFloat(b);
-            break;
-        case '/' : 
-            result = parseFloat(a) / parseFloat(b);
-            break;
-        case '*':
-            result = parseFloat(a) * parseFloat(b);
-            break
+    if (b == 0 && operator === '/') {
+        hiddenClear()
+        return
     }
-    screen.innerHTML = result
-    a = result;
-    b = null
-    operator = null
+    else if (b === null) {
+
+    } else {
+        switch (operator) {
+            case '+':
+                result = parseFloat(a) + parseFloat(b);
+                break;
+            case '-':
+                result = parseFloat(a) - parseFloat(b);
+                break;
+            case '/' :
+                result = parseFloat(a) / parseFloat(b);
+                break;
+            case '*':
+                result = parseFloat(a) * parseFloat(b);
+                break
+            case null:
+                result = a
+        }
+        a = result;
+        let resultString = result.toString()
+        if (resultString.length > 10 && resultString.includes(".") != true) {
+        result = result.toExponential()
+        } else if ( resultString && resultString.includes('.') === true) {
+            result = Math.round(parseFloat(resultString.substring(0,16))*10000000000000)/10000000000000
+        }
+        screen.innerHTML = result
+        b = null
+        operator = null
+}
 }
 
 const clear = document.querySelector("#clear-btn")
 clear.addEventListener('click', clearButton)
 function clearButton() {
     screen.innerHTML = '';
+    infoClear()
+}
+function hiddenClear() {
+    screen.innerHTML = 'You found the hidden clear button!'
+    infoClear()
+}
+function infoClear() {
     a = null;
     b = null;
     operator = null;
     inputSwitch = false
+    result = null
 }
