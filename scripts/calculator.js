@@ -148,17 +148,17 @@ function backspaceButton() {
 const negPos = document.querySelector("#neg-pos-btn");
 negPos.addEventListener('click', negPosButton);
 function negPosButton() {
-    if (inputSwitch === false && a.includes('-') === false) {
+    if (inputSwitch === false && a != null && a.includes('-') === false) {
         a = '-' + a;
         screen.innerHTML = a;
-    } else if (inputSwitch === true && b.includes('-') === false) {
+    } else if (inputSwitch === true && b != null && b.includes('-') === false) {
         b = '-' + b;
         screen.innerHTML = b;
-    } else if (inputSwitch === false && a.includes('-') === true) {
+    } else if (inputSwitch === false && a != null && a.includes('-') === true) {
         a = a.slice(1);
         screen.innerHTML = a;
-    } else if (inputSwitch === true && b.includes('-') === true) {
+    } else if (inputSwitch === true && b != null && b.includes('-') === true) {
         b = b.slice(1);
         screen.innerHTML = b;
-    }
+    } 
 }
