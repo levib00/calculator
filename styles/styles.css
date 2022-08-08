@@ -58,7 +58,7 @@ body {
 .number-button {
     border-width: 1.5px;
 }
-#clear-btn,
+.extra-operator,
 #backspace-btn,
 .operator-button {
     background-color: orange;
