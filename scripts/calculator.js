@@ -1,77 +1,135 @@
-const number = document.querySelectorAll(".number-button")
-let currentInput = null
-const screen = document.querySelector("#screen")
+//TODO add keyboard functionality
+let a = null;
+let b = null;
+let inputSwitch = false;
+const number = document.querySelectorAll(".number-button");
+const screen = document.querySelector("#screen");
 number.forEach((numbers) => {
     numbers.addEventListener('click', () => {
-        if (resultTemp != null) (
-            currentInput = resultTemp
-        )
-        if (screen.innerHTML == resultTemp) {
-            clearScreen()
+        if (result != null) {
+            screen.innerHTML = '';
+            result = null;
         }
-        document.getElementById("screen").innerHTML += numbers.innerHTML
-        console.log(numbers.innerHTML)
-        
-        if (currentInput == null) {
-            currentInput = numbers.innerHTML
-        } else {
-            currentInput += numbers.innerHTML
-            mathArray = currentInput.split(/[*+\-\/=]+/)
-            mathArrayLength = mathArray.length
-            console.log(mathArray)
-            console.log(mathArrayLength)
-        } 
-        
-        })
-})
-// if a != null b = current input?
-const clear = document.querySelector("#clear-button")
-
-let mathArray
-let mathArrayLength
-let array2
-
-let operatorSymbol
-const operator = document.querySelectorAll(".operator-button")
-operator.forEach((operators) => {
-    operators.addEventListener('click', () => {  
-        currentInput += operators.innerHTML
-        operatorSymbol = operators.innerHTML
-        clearScreen()
-        getResult()
-        })
-})
-
-
-let resultTemp = null
-function getResult() {
-    let result
-    if (mathArrayLength > 1) {
-        if (operatorSymbol === '/'){
-            result = parseFloat(mathArray[0]) / parseFloat(mathArray[1])
-        } else if (operatorSymbol === '*') {
-            result = parseFloat(mathArray[0]) * parseFloat(mathArray[1])
-        } else if (operatorSymbol === '+') {
-            result = parseFloat(mathArray[0]) + parseFloat(mathArray[1])
-        } else if (operatorSymbol === '-') {
-            result = parseFloat(mathArray[0]) - parseFloat(mathArray[1])
+        if ((a != null && a.length > 9 && inputSwitch === false) || (b != null && b.length > 9 && inputSwitch === true)) {
         }
-    document.getElementById("screen").innerHTML = result
-    console.log('works')
-    mathArray[0] = result
-    resultTemp = result
-    mathArray = mathArray.splice(1, 1)
-    console.log(mathArray)
-    
-    } else {}
+        else if (a === null && inputSwitch === false) {
+            a = numbers.innerHTML;
+            screen.innerHTML = a;
+        } else if ( inputSwitch === false) {
+            a += numbers.innerHTML;
+            screen.innerHTML = a;
+        } else if (b === null && inputSwitch === true) {
+            b = numbers.innerHTML;
+            screen.innerHTML = b;
+        } else if (inputSwitch === true) {
+            b += numbers.innerHTML;
+            screen.innerHTML = b;
+        }     
+    });
+});
+let operator = null;
+
+const add = document.querySelector("#plus-btn");
+add.addEventListener('click', addButton);
+function addButton() {
+    if (b !== null) {
+        calculate();
+    }
+    inputSwitch = true;
+    operator = "+";
 }
-clear.addEventListener('click', clearButton)
+const subtract = document.querySelector("#minus-btn");
+subtract.addEventListener('click', subtractButton);
+function subtractButton() {
+    if (b !== null) {
+        calculate();
+    }
+    inputSwitch = true;
+    operator = "-";
+}
+const multiply = document.querySelector("#multiply-btn");
+multiply.addEventListener('click', multiplyButton);
+function multiplyButton() {
+    if (b !== null) {
+        calculate();
+    }
+    inputSwitch = true;
+    operator = "*";
+}
+const divide = document.querySelector("#division-btn");
+divide.addEventListener('click', divideButton);
+function divideButton() {
+    if (b !== null) {
+        calculate();
+    }
+    inputSwitch = true;
+    operator = "/";
+}
+let result = null
+const equals = document.querySelector("#equals-btn");
+equals.addEventListener('click', calculate);
+function calculate() {
+    if (b == 0 && operator === '/') {
+        hiddenClear();
+        return;
+    }
+    else if (b === null) {
+
+    } else {
+        switch (operator) {
+            case '+':
+                result = parseFloat(a) + parseFloat(b);
+                break;
+            case '-':
+                result = parseFloat(a) - parseFloat(b);
+                break;
+            case '/' :
+                result = parseFloat(a) / parseFloat(b);
+                break;
+            case '*':
+                result = parseFloat(a) * parseFloat(b);
+                break;
+            case null:
+                result = a;
+        }
+        a = result;
+        let resultString = result.toString();
+        if (resultString.length > 10 && resultString.includes(".") != true) {
+        result = result.toExponential();
+        } else if ( resultString && resultString.includes('.') === true) {
+            result = Math.round(parseFloat(resultString.substring(0,16))*10000000000000)/10000000000000;
+        }
+        screen.innerHTML = result;
+        b = null;
+        operator = null;
+}
+}
+
+const clear = document.querySelector("#clear-btn");
+clear.addEventListener('click', clearButton);
 function clearButton() {
-    clearScreen()
-    mathArray = mathArray.splice(0, mathArray.length)
-    result = 0
-    currentInput = null
+    screen.innerHTML = '';
+    infoClear();
 }
-function clearScreen() {
-    document.getElementById("screen").innerHTML = ''
+function hiddenClear() {
+    screen.innerHTML = 'You found the hidden clear button!';
+    infoClear();
+}
+function infoClear() {
+    a = null;
+    b = null;
+    operator = null;
+    inputSwitch = false;
+    result = null;
+}
+const backspace = document.querySelector("#backspace-btn");
+backspace.addEventListener('click', backspaceButton);
+function backspaceButton() {
+    if (inputSwitch === false) {
+        a = a.slice(0,-1);
+        screen.innerHTML = a;
+    } else if (inputSwitch === true) {
+        b = b.slice(0,-1);
+        screen.innerHTML = b;
+    }
 }
